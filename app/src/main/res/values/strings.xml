@@ -1,5 +1,7 @@
 <resources>
     <string name="app_name">Расписание</string>
     <string name="weekday">День недели</string>
-    <string name="server_url">https://timetable-server-mtuci.herokuapp.com/</string>
+    <string name="default_name">Пользователь</string>
+    <string name="server_url">https://timetable-server-mtuci.herokuapp.com</string>
+    <string name="client_id">1038465445190-41adgo4otnidfpdk0p91lgipm8n54arp.apps.googleusercontent.com</string>
 </resources>
