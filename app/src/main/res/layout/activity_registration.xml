@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#009688"
+    tools:context="com.example.timetableapp.MainActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:layout_marginEnd="25dp"
+        android:layout_marginStart="25dp"
+        android:layout_marginBottom="20dp"
+        android:layout_marginTop="45dp">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:text="Регистрация"
+            android:background="@drawable/gradient_bg"
+            android:textSize="30dp"
+            android:gravity="center"
+            android:layout_marginBottom="90dp"/>
+        <EditText
+            android:id="@+id/et_mail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Введите электронный адрес(логин)"
+            android:inputType="textEmailAddress" />
+
+        <EditText
+            android:id="@+id/et_entryPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Введите пароль"
+            android:inputType="textPassword" />
+
+        <EditText
+            android:id="@+id/et_repeatPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Повторно введите пароль"
+            android:inputType="textPassword" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btn_cancelRegistration"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"
+                android:text="Отмена"></Button>
+
+            <Button
+                android:id="@+id/btn_continueRegistration"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"
+                android:text="Далее"></Button>
+
+
+        </LinearLayout>
+
+    </LinearLayout>
+</RelativeLayout>

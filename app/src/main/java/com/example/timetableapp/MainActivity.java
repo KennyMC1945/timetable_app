@@ -128,10 +128,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
         tv_gDockText = findViewById(R.id.tv_dockText);
         Date today = Calendar.getInstance().getTime();
-        SimpleDateFormat sdf = new SimpleDateFormat("EEEE");
-        String weekday = sdf.format(today);
-        TextView tv_weekday = findViewById(R.id.tv_weekday);
-        tv_weekday.setText(weekday.substring(0,1).toUpperCase()+weekday.substring(1));
+        SimpleDateFormat sdf = new SimpleDateFormat("u");
+        int weekday = Integer.parseInt(sdf.format(today));
         findViewById(R.id.googleAuth).setOnClickListener(this);
         findViewById(R.id.googleSignOut).setOnClickListener(this);
     }

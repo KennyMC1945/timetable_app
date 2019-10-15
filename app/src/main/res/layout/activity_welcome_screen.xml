@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#009688"
+    tools:context="com.example.timetableapp.MainActivity"
+    >
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:layout_marginBottom="20dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginStart="25dp"
+        android:layout_marginEnd="25dp"
+        >
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:text="Добро пожаловать!"
+            android:background="@drawable/gradient_bg"
+            android:layout_marginBottom="90dp"
+            android:gravity="center"
+            android:textSize="30dp"/>
+        <EditText
+            android:id="@+id/et_startGroup"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Введите название группы"
+            android:inputType="textPersonName"
+            />
+        <Button
+            android:id="@+id/btn_localSignIn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Продолжить без регистрации"></Button>
+
+        <Button
+            android:id="@+id/btn_signUp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Регистрация"></Button>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Уже есть аккаунт?"
+            android:gravity="center"
+            android:textSize="18dp"
+
+            android:layout_marginTop="40dp"
+            android:layout_marginBottom="10dp"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btn_signIn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"
+                android:text="Войти"></Button>
+
+            <com.google.android.gms.common.SignInButton
+                android:id="@+id/btn_continueWithGoogle"
+                android:layout_weight="0.5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+
+
+    </LinearLayout>
+</RelativeLayout>
+

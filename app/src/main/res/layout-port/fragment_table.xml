@@ -1,18 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#009688"
-    tools:context=".MainActivity">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <View
         android:id="@+id/view_header"
         android:layout_width="0dp"
         android:layout_height="76dp"
         android:layout_marginStart="25dp"
-        android:layout_marginTop="10dp"
         android:layout_marginEnd="25dp"
         android:layout_marginBottom="20dp"
         android:background="@drawable/table_header"
@@ -20,7 +16,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.22000003" />
 
     <View
@@ -240,90 +236,5 @@
         app:layout_constraintStart_toStartOf="@+id/view_header"
         app:layout_constraintTop_toTopOf="@+id/view_header" />
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="70dp"
-        android:background="#016F64"
-        android:minHeight="?attr/actionBarSize"
-        android:theme="?attr/actionBarTheme"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <ImageView
-        android:id="@+id/imageView2"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:layout_marginStart="15dp"
-        android:contentDescription="test"
-        android:visibility="visible"
-        app:layout_constraintBottom_toBottomOf="@+id/toolbar"
-        app:layout_constraintEnd_toEndOf="@+id/toolbar"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/toolbar"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/test"
-        tools:srcCompat="@drawable/test"
-        tools:visibility="visible" />
-
-
-
-    <com.google.android.gms.common.SignInButton
-        android:id="@+id/googleAuth"
-        android:layout_width="128dp"
-        android:layout_height="wrap_content"
-
-        android:layout_marginStart="48dp"
-        android:layout_marginTop="15dp"
-        android:layout_marginEnd="116dp"
-        android:layout_marginBottom="40dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/view_body"
-        app:layout_constraintVertical_bias="0.241" />
-
-    <TextView
-        android:id="@+id/tv_gAuthResult"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="151dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="151dp"
-        android:layout_marginBottom="55dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/googleAuth" />
-
-    <Button
-        android:id="@+id/googleSignOut"
-        android:layout_width="128dp"
-        android:layout_height="48dp"
-        android:layout_marginEnd="48dp"
-        android:text="Выйти"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/googleAuth"
-        app:layout_constraintTop_toBottomOf="@+id/view_body"
-        app:layout_constraintVertical_bias="0.256" />
-
-    <TextView
-        android:id="@+id/tv_dockText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:fontFamily="sans-serif-light"
-        android:text="@string/default_name"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        android:textSize="24sp"
-        app:layout_constraintBottom_toBottomOf="@+id/toolbar"
-        app:layout_constraintEnd_toEndOf="@+id/toolbar"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/imageView2"
-        app:layout_constraintTop_toTopOf="@+id/toolbar" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
