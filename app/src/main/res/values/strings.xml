@@ -3,5 +3,8 @@
     <string name="weekday">День недели</string>
     <string name="default_name">Пользователь</string>
     <string name="server_url">https://timetable-server-mtuci.herokuapp.com</string>
+    <string name="local_login_url">/auth/local/login</string>
+    <string name="local_register_url">/auth/local/register</string>
     <string name="client_id">1038465445190-41adgo4otnidfpdk0p91lgipm8n54arp.apps.googleusercontent.com</string>
+    <string name="conf_file">app_settings</string>
 </resources>

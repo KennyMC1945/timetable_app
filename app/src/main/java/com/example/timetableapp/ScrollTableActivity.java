@@ -48,8 +48,13 @@ public class ScrollTableActivity extends AppCompatActivity {
     public void onActivityResult(int requestCode, int resultCode, Intent data){
         if (requestCode == 15 && resultCode == RESULT_CANCELED) finish();
         if (requestCode == 15 && resultCode == RESULT_OK){
-            TextView dockText = findViewById(R.id.activity_fragments_tv_dockText);
-            dockText.setText(data.getStringExtra("group"));
+            if (data.getBooleanExtra("google",false)) {
+                TextView dockText = findViewById(R.id.activity_fragments_tv_dockText);
+                dockText.setText(data.getStringExtra("name"));
+            } else {
+                TextView dockText = findViewById(R.id.activity_fragments_tv_dockText);
+                dockText.setText(data.getStringExtra("group"));
+            }
         }
     }
 }

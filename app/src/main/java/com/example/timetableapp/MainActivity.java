@@ -63,7 +63,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         RequestQueue queue = Volley.newRequestQueue(this);
         JSONObject params = new JSONObject();
         params.put("token",idToken);
-        VerifyRequest verifyRequest = new VerifyRequest(Request.Method.POST, getString(R.string.server_url) + GOOGLE_AUTH_URL,
+        JSONStringRequest verifyRequest = new JSONStringRequest(Request.Method.POST, getString(R.string.server_url) + GOOGLE_AUTH_URL,
                 params,
                 new Response.Listener<String>() {
                     @Override

@@ -15,9 +15,9 @@ import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.Map;
 
-public class VerifyRequest extends JsonRequest<String> {
+public class JSONStringRequest extends JsonRequest<String> {
 
-    public VerifyRequest(int Method, String url, JSONObject jsonRequest, Response.Listener<String> listener, Response.ErrorListener errorListener){
+    public JSONStringRequest(int Method, String url, JSONObject jsonRequest, Response.Listener<String> listener, Response.ErrorListener errorListener){
         super(
                 Method,
                 url,
