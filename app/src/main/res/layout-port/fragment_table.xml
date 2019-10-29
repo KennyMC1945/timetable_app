@@ -56,91 +56,96 @@
             android:divider="@drawable/divider_vert"
             android:showDividers="middle"
             android:orientation="vertical">
+
             <TextView
                 android:id="@+id/tv_firstType"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
                 android:layout_marginStart="5dp"
-                android:layout_marginBottom="5dp"
+                android:layout_marginTop="5dp"
                 android:layout_marginEnd="5dp"
+                android:layout_marginBottom="5dp"
                 android:background="@drawable/practice_icon"
-                android:text="ПР"
                 android:enabled="false"
                 android:gravity="center"
                 android:inputType="none|textNoSuggestions"
+                android:text="ПР"
                 android:textAlignment="gravity"
                 android:textColor="@color/cardview_dark_background"
                 android:textSize="18sp"
-                android:visibility="visible"/>
+                android:visibility="invisible" />
+
             <TextView
                 android:id="@+id/tv_secondType"
                 android:layout_width="match_parent"
                 android:layout_height="32dp"
-                android:layout_marginTop="5dp"
                 android:layout_marginStart="5dp"
-                android:layout_marginBottom ="5dp"
+                android:layout_marginTop="5dp"
                 android:layout_marginEnd="5dp"
+                android:layout_marginBottom="5dp"
                 android:background="@drawable/lab_icon"
-                android:text="ЛР"
                 android:enabled="false"
                 android:gravity="center"
                 android:inputType="none|textNoSuggestions"
+                android:text="ЛР"
                 android:textAlignment="gravity"
                 android:textColor="@color/cardview_dark_background"
                 android:textSize="18sp"
-                android:visibility="visible"/>
+                android:visibility="invisible" />
+
             <TextView
                 android:id="@+id/tv_thirdType"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
                 android:layout_marginStart="5dp"
-                android:layout_marginBottom="5dp"
+                android:layout_marginTop="5dp"
                 android:layout_marginEnd="5dp"
+                android:layout_marginBottom="5dp"
                 android:background="@drawable/practice_icon"
-                android:text="ПР"
                 android:enabled="false"
                 android:gravity="center"
                 android:inputType="none|textNoSuggestions"
+                android:text="ПР"
                 android:textAlignment="gravity"
                 android:textColor="@color/cardview_dark_background"
                 android:textSize="18sp"
-                android:visibility="visible"/>
+                android:visibility="invisible" />
+
             <TextView
                 android:id="@+id/tv_fourthType"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
                 android:layout_marginStart="5dp"
-                android:layout_marginBottom="5dp"
+                android:layout_marginTop="5dp"
                 android:layout_marginEnd="5dp"
+                android:layout_marginBottom="5dp"
                 android:background="@drawable/lection_icon"
-                android:text="ЛК"
                 android:enabled="false"
                 android:gravity="center"
                 android:inputType="none|textNoSuggestions"
+                android:text="ЛК"
                 android:textAlignment="gravity"
                 android:textColor="@color/cardview_dark_background"
                 android:textSize="18sp"
-                android:visibility="visible"/>
+                android:visibility="invisible" />
+
             <TextView
                 android:id="@+id/tv_fifthType"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
                 android:layout_marginStart="5dp"
-                android:layout_marginBottom="5dp"
+                android:layout_marginTop="5dp"
                 android:layout_marginEnd="5dp"
+                android:layout_marginBottom="5dp"
                 android:background="@drawable/lection_icon"
-                android:text="ЛК"
                 android:enabled="false"
                 android:gravity="center"
                 android:inputType="none|textNoSuggestions"
+                android:text="ЛК"
                 android:textAlignment="gravity"
                 android:textColor="@color/cardview_dark_background"
                 android:textSize="18sp"
-                android:visibility="visible"/>
+                android:visibility="invisible" />
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
@@ -155,34 +160,40 @@
                 android:layout_width="match_parent"
                 android:layout_height="42dp"
                 android:gravity="center"
-                android:text="Первая пара" />
+                android:text="Первая пара"
+                android:visibility="invisible" />
 
             <TextView
                 android:id="@+id/tv_secondLesson"
                 android:layout_width="match_parent"
                 android:layout_height="42dp"
                 android:gravity="center"
-                android:text="Вторая пара" />
+                android:text="Вторая пара"
+                android:visibility="invisible" />
+
             <TextView
                 android:id="@+id/tv_thirdLesson"
                 android:layout_width="match_parent"
                 android:layout_height="42dp"
                 android:gravity="center"
                 android:text="Третья пара"
-                />
+                android:visibility="invisible" />
 
             <TextView
                 android:id="@+id/tv_fourthLesson"
                 android:layout_width="match_parent"
                 android:layout_height="42dp"
                 android:gravity="center"
-                android:text="Четвертая пара" />
+                android:text="Четвертая пара"
+                android:visibility="invisible" />
+
             <TextView
                 android:id="@+id/tv_fifthLesson"
                 android:layout_width="match_parent"
                 android:layout_height="42dp"
                 android:gravity="center"
-                android:text="Пятая пара" />
+                android:text="Пятая пара"
+                android:visibility="invisible" />
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
@@ -191,38 +202,46 @@
             android:divider="@drawable/divider_vert"
             android:showDividers="middle"
             android:layout_weight="0.9">
+
             <TextView
                 android:id="@+id/tv_firstAud"
                 android:layout_width="match_parent"
                 android:layout_height="42dp"
                 android:gravity="center"
-                android:text="А-103" />
+                android:text="А-103"
+                android:visibility="invisible" />
 
             <TextView
                 android:id="@+id/tv_secondAud"
                 android:layout_width="match_parent"
                 android:layout_height="42dp"
                 android:gravity="center"
-                android:text="Л-208" />
+                android:text="Л-208"
+                android:visibility="invisible" />
+
             <TextView
                 android:id="@+id/tv_thirdAud"
                 android:layout_width="match_parent"
                 android:layout_height="42dp"
                 android:gravity="center"
-                android:text="Л-413" />
+                android:text="Л-413"
+                android:visibility="invisible" />
 
             <TextView
                 android:id="@+id/tv_fourthAud"
                 android:layout_width="match_parent"
                 android:layout_height="42dp"
                 android:gravity="center"
-                android:text="А-404" />
+                android:text="А-404"
+                android:visibility="invisible" />
+
             <TextView
                 android:id="@+id/tv_fifthAud"
                 android:layout_width="match_parent"
                 android:layout_height="42dp"
                 android:gravity="center"
-                android:text="А-301" />
+                android:text="А-301"
+                android:visibility="invisible" />
         </LinearLayout>
     </LinearLayout>
     <TextView

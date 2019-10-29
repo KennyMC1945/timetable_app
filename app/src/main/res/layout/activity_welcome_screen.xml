@@ -27,13 +27,45 @@
             android:layout_marginBottom="90dp"
             android:gravity="center"
             android:textSize="30dp"/>
+
         <EditText
             android:id="@+id/et_startGroup"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Введите название группы"
-            android:inputType="textPersonName"
-            />
+            android:inputType="textPersonName" />
+        <TextView
+            android:id="@+id/tv_weekHint"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Текущая неделя:"
+            android:textSize="15sp"
+            android:layout_marginStart="2dp"
+            android:layout_marginBottom="2dp">
+
+        </TextView>
+        <RadioGroup
+            android:id="@+id/rg_week"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/rb_topWeek"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"
+                android:text="Верхняя" />
+
+            <RadioButton
+                android:id="@+id/rb_bottomWeek"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"
+
+                android:text="Нижняя" />
+        </RadioGroup>
+
         <Button
             android:id="@+id/btn_localSignIn"
             android:layout_width="match_parent"
@@ -55,6 +87,7 @@
 
             android:layout_marginTop="40dp"
             android:layout_marginBottom="10dp"/>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

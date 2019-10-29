@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,6 +28,10 @@ import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 
 public class WelcomeActivity extends FragmentActivity implements View.OnClickListener {
 
@@ -69,7 +74,15 @@ public class WelcomeActivity extends FragmentActivity implements View.OnClickLis
                     group_name.setHintTextColor(Color.RED);
                     break;
                 }
+                Date today = Calendar.getInstance().getTime();
+                SimpleDateFormat sdf = new SimpleDateFormat("w");
+                RadioGroup radioGroup = findViewById(R.id.rg_week);
+                int btn_id = radioGroup.getCheckedRadioButtonId();
+                int today_week =  Integer.parseInt(sdf.format(today));
+                int top_week =(btn_id == R.id.rb_topWeek)?today_week:today_week-1;
                 Intent intent = new Intent();
+                intent.putExtra("no-auth",true);
+                intent.putExtra("top_week",top_week);
                 intent.putExtra("group",group_name.getText().toString());
                 setResult(RESULT_OK,intent);
                 finish();
