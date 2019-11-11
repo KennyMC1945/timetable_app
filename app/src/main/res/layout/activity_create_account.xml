@@ -63,6 +63,34 @@
             android:hint="Введите название группы"
             android:inputType="text" />
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Текущая неделя:"
+            android:textSize="16sp"
+            android:layout_marginStart="2dp"/>
+        <RadioGroup
+            android:id="@+id/acc_info_rg_week"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/acc_info_rb_topWeek"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"
+                android:text="Верхняя" />
+
+            <RadioButton
+                android:id="@+id/acc_info_rb_bottomWeek"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"
+
+                android:text="Нижняя" />
+        </RadioGroup>
+
         <Button
             android:id="@+id/btn_completeRegistration"
             android:layout_width="match_parent"

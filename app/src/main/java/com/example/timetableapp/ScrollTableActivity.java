@@ -15,6 +15,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
 
 import com.android.volley.Response;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import org.json.JSONObject;
 
@@ -25,18 +27,37 @@ import java.util.Date;
 public class ScrollTableActivity extends AppCompatActivity {
 
     private final String GET_TIMETABLE_URL = "/info/getTimetable";
+    private FirebaseAuth mAuth;
     private ConnectionManager cm;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         setContentView(R.layout.activity_fragments);
+        mAuth = FirebaseAuth.getInstance();
         cm = new ConnectionManager(getString(R.string.server_url),getApplicationContext());
-        if (getSharedPreferences("timetable",MODE_PRIVATE).contains("group")) setViewPager();
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        /* TODO: Auth checking */
+        if (getSharedPreferences("user_info",MODE_PRIVATE).contains("group")) setViewPager();
         else {
             Intent i = new Intent(ScrollTableActivity.this,WelcomeActivity.class);
             startActivityForResult(i,15);
         }
+        findViewById(R.id.iv_logout).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SharedPreferences.Editor editor = getSharedPreferences("timetable", MODE_PRIVATE).edit();
+                SharedPreferences.Editor infoEditor = getSharedPreferences("user_info",MODE_PRIVATE).edit();
+                infoEditor.clear();
+                infoEditor.commit();
+                editor.clear();
+                editor.commit();
+                Intent thisInt = getIntent();
+                finish();
+                startActivity(thisInt);
+                FirebaseAuth.getInstance().signOut();
+            }
+        });
         ImageView iv = findViewById(R.id.imageView2);
         iv.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -62,14 +83,11 @@ public class ScrollTableActivity extends AppCompatActivity {
     public void onActivityResult(int requestCode, int resultCode, Intent data){
         if (requestCode == 15 && resultCode == RESULT_CANCELED) finish();
         if ((requestCode == 15 || requestCode == 532) && resultCode == RESULT_OK){
-            if (data.getBooleanExtra("google",false)) {
-                TextView dockText = findViewById(R.id.activity_fragments_tv_dockText);
-                dockText.setText(data.getStringExtra("name"));
-            } else if (data.getBooleanExtra("no-auth",false)) {
-                sendTimetableRequest(data.getStringExtra("group"),data.getIntExtra("top_week",0));
+            if (data.getBooleanExtra("no-auth",false)) {
+                sendTimetableRequest(data.getStringExtra("group"), data.getIntExtra("top_week", 0));
             } else {
-                TextView dockText = findViewById(R.id.activity_fragments_tv_dockText);
-                dockText.setText(data.getStringExtra("group"));
+                SharedPreferences user_info = getSharedPreferences("user_info",MODE_PRIVATE);
+                sendTimetableRequest(user_info.getString("group",""), user_info.getInt("top_week",0));
             }
         }
     }
@@ -81,18 +99,20 @@ public class ScrollTableActivity extends AppCompatActivity {
             cm.postJSONRequest(GET_TIMETABLE_URL, params, new Response.Listener<JSONObject>() {
                 @Override
                 public void onResponse(JSONObject response) {
-                    SharedPreferences.Editor editor = getSharedPreferences("timetable", MODE_PRIVATE).edit();
+                    SharedPreferences.Editor infoEditor = getSharedPreferences("user_info",MODE_PRIVATE).edit();
+                    SharedPreferences.Editor ttEditor = getSharedPreferences("timetable", MODE_PRIVATE).edit();
                     try {
                         int status = response.getInt("status");
                         if (status == 200) {
-                            editor.putString("group",group);
-                            editor.putInt("top_week",top_week);
-                            editor.putString("mon", response.getString("mon"));
-                            editor.putString("tue", response.getString("tue"));
-                            editor.putString("wed", response.getString("wed"));
-                            editor.putString("thu", response.getString("thu"));
-                            editor.putString("fri", response.getString("fri"));
-                            editor.apply();
+                            infoEditor.putString("group",group);
+                            infoEditor.putInt("top_week",top_week);
+                            ttEditor.putString("mon", response.getString("mon"));
+                            ttEditor.putString("tue", response.getString("tue"));
+                            ttEditor.putString("wed", response.getString("wed"));
+                            ttEditor.putString("thu", response.getString("thu"));
+                            ttEditor.putString("fri", response.getString("fri"));
+                            ttEditor.apply();
+                            infoEditor.apply();
                             setViewPager();
                             Toast.makeText(getApplicationContext(),"Success on gathering data",Toast.LENGTH_SHORT).show();
                         } else if (status == 400) {

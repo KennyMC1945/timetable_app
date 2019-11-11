@@ -15,6 +15,7 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.FragmentActivity;
 
@@ -25,6 +26,15 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.auth.api.signin.GoogleSignInResult;
+import com.google.android.gms.common.api.ApiException;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthCredential;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.GoogleAuthCredential;
+import com.google.firebase.auth.GoogleAuthProvider;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -32,28 +42,32 @@ import org.json.JSONObject;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.regex.Pattern;
 
-public class WelcomeActivity extends FragmentActivity implements View.OnClickListener {
+public class WelcomeActivity extends FragmentActivity implements View.OnClickListener, AuthListener {
 
     private final int RC_REGISTRATION = 1152;
-    private final int RC_GOOGLE_VERIFY = 1251;
-    private final String GOOGLE_AUTH_URL = "/auth/google/verify";
+    private final int RC_LOGIN        = 1151;
+    private final int RC_GOOGLE_AUTH  = 1251;
+    private final int RC_GOOGLE_INFO  = 1252;
     private GoogleSignInClient mGoogleSignInClient;
     private GoogleSignInOptions gso;
     private ConnectionManager cm;
-
+    private FirebaseAuth mAuth;
+    private AuthorizationManager authManager;
+    private Intent fbAuthData = new Intent();
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestIdToken(getString(R.string.client_id))
+                .requestIdToken(getString(R.string.firebase_client_id))
                 .requestEmail()
-                .requestServerAuthCode(getString(R.string.client_id),false)
+                .requestServerAuthCode(getString(R.string.firebase_client_id),false)
                 .build();
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
-        /* TODO:
-        *   Получение нового токена, ибо старый быстро устаревает */
-        //GoogleSignInAccount acc = GoogleSignIn.getLastSignedInAccount(this);
+        mAuth = FirebaseAuth.getInstance();
+        authManager = new AuthorizationManager(getApplicationContext());
+        authManager.subscribe(this);
         cm = new ConnectionManager(getString(R.string.server_url),getApplicationContext());
         setContentView(R.layout.activity_welcome_screen);
         Button localSignIn = findViewById(R.id.btn_localSignIn);
@@ -95,14 +109,18 @@ public class WelcomeActivity extends FragmentActivity implements View.OnClickLis
                 break;
             case R.id.btn_signIn:
                 /* Вход через логин/пароль */
-                loginDialog();
+                Intent loginDialog = new Intent(WelcomeActivity.this,LoginDialogActivity.class);
+                startActivityForResult(loginDialog,RC_LOGIN);
                 break;
             case R.id.btn_continueWithGoogle:
                 /* Вход через гугл */
-                googleSignIn();
+                Intent signInIntent = mGoogleSignInClient.getSignInIntent();
+                startActivityForResult(signInIntent, RC_GOOGLE_AUTH);
                 break;
         }
     }
+
+
 
     @Override
     public void onBackPressed(){
@@ -122,57 +140,55 @@ public class WelcomeActivity extends FragmentActivity implements View.OnClickLis
     @Override
     public void onActivityResult(int reqCode, final int resCode, Intent data){
         super.onActivityResult(reqCode,resCode,data);
-        /* TODO:
-        *   Обработка токена
-        *   Запись токена и другой инфы в shared prefs*/
 
-        if (reqCode == RC_GOOGLE_VERIFY) {
-            // The Task returned from this call is always completed, no need to attach
-            // a listener.
-            GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
-            if (result.isSuccess()){
-                GoogleSignInAccount acc = result.getSignInAccount();
-                try{
-                    sendToken(acc);
-                } catch (Exception e) { Log.w("JSONException",e.getStackTrace().toString()); }
+        if (reqCode >= 1200) { // Если с гуглом
+            if (reqCode == RC_GOOGLE_AUTH) {
+                Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
+                try {
+                    GoogleSignInAccount acc = task.getResult(ApiException.class);
+                    fbAuthData.putExtra("gIDToken", acc.getIdToken());
+                    fbAuthData.putExtra("login",true);
+                    authManager.authWithGoogle(fbAuthData);
+                } catch (ApiException e) {
+
+                }
+            } else if (reqCode == RC_GOOGLE_INFO && resCode == RESULT_OK) {
+                fbAuthData.putExtra("group", data.getStringExtra("group"));
+                fbAuthData.putExtra("top_week", data.getIntExtra("top_week", 0));
+                fbAuthData.putExtra("name", data.getStringExtra("name"));
+                authManager.authWithGoogle(fbAuthData);
             }
-            else {
+        } else { // Если локальная регистрация/логин
+            if (reqCode == RC_REGISTRATION && resCode == RESULT_OK) {
+                fbAuthData.putExtras(data);
+                fbAuthData.putExtra("group",data.getStringExtra("group"));
+                fbAuthData.putExtra("top_week",data.getIntExtra("top_week",0));
+                fbAuthData.putExtra("name",data.getStringExtra("name"));
+                authManager.registerWithEmail(fbAuthData);
+            } else if (reqCode == RC_LOGIN && resCode == RESULT_OK){
+                authManager.authWithEmail(data);
             }
         }
     }
 
-    /* --- Пользовательские функции --- */
-    public void googleSignIn(){
-        Intent signInIntent = mGoogleSignInClient.getSignInIntent();
-        startActivityForResult(signInIntent, RC_GOOGLE_VERIFY);
+    @Override public void onDestroy(){
+        authManager.unsubscribe(this);
+        super.onDestroy();
     }
 
-    public void loginDialog(){
-        Intent loginDialog = new Intent(WelcomeActivity.this,LoginDialogActivity.class);
-        startActivityForResult(loginDialog,214);
-//        DialogFragment login = new LoginDialogFragment();
-//        login.show(getSupportFragmentManager(),"Login");
-
+    @Override
+    public void update(int resCode) {
+        // TODO: Обработка регистраций
+        boolean authenticated = getApplicationContext().getSharedPreferences("user_info",MODE_PRIVATE).getBoolean("authenticated",false);
+        if (authenticated && resCode == 0){
+                setResult(RESULT_OK,new Intent());
+                finish();
+        } else if (resCode == 1050) {
+            fbAuthData.putExtra("login",false);
+            Intent continueRegistration = new Intent(WelcomeActivity.this, AccountInfoActivity.class);
+            continueRegistration.putExtra("reqCode", RC_GOOGLE_INFO);
+            startActivityForResult(continueRegistration, RC_GOOGLE_INFO);
+        }
     }
 
-    public void sendToken(GoogleSignInAccount acc) throws JSONException{
-        String idToken = acc.getIdToken();
-        JSONObject reqObj = new JSONObject();
-        reqObj.put("token", idToken);
-        cm.postJSONRequest(GOOGLE_AUTH_URL, reqObj, new Response.Listener<JSONObject>() {
-            @Override
-            public void onResponse(JSONObject response) {
-                try {
-                    int status = response.getInt("status");
-                    if (status == 200) {
-                        Intent data = new Intent();
-                        data.putExtra("google",true);
-                        data.putExtra("name", response.getString("username"));
-                        setResult(RESULT_OK, data);
-                        finish();
-                    }
-                } catch (Exception e) { Log.w("JSONException",e.getStackTrace().toString()); }
-            }
-        });
-    }
 }

@@ -59,28 +59,12 @@ public class RegistrationActivity extends Activity implements View.OnClickListen
         if (requestCode == RC_LOCAL_REG_ACC_INFO && resultCode == RESULT_OK){
             EditText email = findViewById(R.id.et_mail);
             EditText pass = findViewById(R.id.et_entryPassword);
-            try {
-                JSONObject params = new JSONObject();
-                params.put("mail", email.getText().toString());
-                params.put("pass", pass.getText().toString());
-                params.put("group", data.getStringExtra("group"));
-                params.put("name", data.getStringExtra("name"));
-                cm.postJSONRequest(getString(R.string.local_register_url), params, new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        try {
-                            int status = response.getInt("status");
-                            if (status == 200) {
-                                Toast.makeText(getApplicationContext(), response.getString("token"), Toast.LENGTH_SHORT).show();
-                            } else if (status == 400) {
-                                Toast.makeText(getApplicationContext(), response.getString("msg"), Toast.LENGTH_SHORT).show();
-                            }
-                        } catch (Exception e) {}
-                    }
-                });
-            } catch (Exception e) {}
-
-
+            Intent registerData = new Intent();
+            registerData.putExtras(data);
+            registerData.putExtra("email",email.getText().toString());
+            registerData.putExtra("pass",pass.getText().toString());
+            setResult(RESULT_OK,registerData);
+            finish();
         }
     }
 

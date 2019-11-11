@@ -68,7 +68,7 @@ public class TableFragment extends Fragment {
     }
 
     private boolean isTopWeek() {
-        int top_week = getContext().getSharedPreferences("timetable", Context.MODE_PRIVATE).getInt("top_week", 0);
+        int top_week = getContext().getSharedPreferences("user_info", Context.MODE_PRIVATE).getInt("top_week", 0);
         Date today = Calendar.getInstance().getTime();
         SimpleDateFormat sdf = new SimpleDateFormat("w");
         int week_now = Integer.parseInt(sdf.format(today));

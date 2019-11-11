@@ -40,41 +40,21 @@ public class LoginDialogActivity extends Activity implements View.OnClickListene
 
     }
 
-    public void login() throws JSONException{
+    public void login() {
         EditText email = findViewById(R.id.dialog_login_et_email);
         EditText pass = findViewById(R.id.dialog_login_et_pass);
-        JSONObject params = new JSONObject();
-        params.put("mail",email.getText());
-        params.put("pass",pass.getText());
-        cm.postJSONRequest(getString(R.string.local_login_url), params, new Response.Listener<JSONObject>() {
-            @Override
-            public void onResponse(JSONObject response) {
-                try {
-                    int status = response.getInt("status");
-                    if (status == 200) {
-                        SharedPreferences.Editor editor = appSharedPrefs.edit();
-                        editor.putString("auth-token", response.getString("token"));
-                        editor.apply();
-                        Intent result = new Intent();
-                        result.putExtra("auth",true);
-                        setResult(RESULT_OK,result);
-                        finish();
-                    } else if (status == 400) {
-                        Toast.makeText(getApplicationContext(), response.getString("msg"), Toast.LENGTH_SHORT).show();
-                    }
-                } catch (JSONException e) {}
-            }
-
-        });
+        Intent loginData = new Intent();
+        loginData.putExtra("email",email.getText().toString());
+        loginData.putExtra("pass",pass.getText().toString());
+        setResult(RESULT_OK,loginData);
+        finish();
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.dialog_login_btn_signIn:
-                try {
-                    login();
-                } catch (JSONException e) {}
+                login();
                 break;
             case R.id.dialog_login_btn_cancel:
                 finish();

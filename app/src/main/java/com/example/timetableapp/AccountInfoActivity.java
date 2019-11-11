@@ -6,13 +6,18 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RadioGroup;
 import android.widget.TextView;
+
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 
 public class AccountInfoActivity extends Activity implements View.OnClickListener {
 
     private Intent parent;
     private final int RC_LOCAL_REG_ACC_INFO = 1153;
-    private final int RC_GOOGLE_REGISTER = 1252;
+    private final int RC_GOOGLE_INFO = 1252;
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
@@ -30,7 +35,7 @@ public class AccountInfoActivity extends Activity implements View.OnClickListene
         EditText et_lastName = findViewById(R.id.et_secondName);
 
         switch (reqCode){
-            case RC_GOOGLE_REGISTER:
+            case RC_GOOGLE_INFO:
                 tv_title.setText("Уточнение данных");
                 String[] name = (parent.hasExtra("name"))?parent.getStringExtra("name").split(" "):"Default Name".split(" ");
                 et_firstName.setText(name[0]);
@@ -49,9 +54,16 @@ public class AccountInfoActivity extends Activity implements View.OnClickListene
             case R.id.btn_completeRegistration:
                 EditText name = findViewById(R.id.et_firstName);
                 EditText surname = findViewById(R.id.et_secondName);
+                RadioGroup radioGroup = findViewById(R.id.acc_info_rg_week);
+                Date today = Calendar.getInstance().getTime();
+                SimpleDateFormat sdf = new SimpleDateFormat("w");
+                int btn_id = radioGroup.getCheckedRadioButtonId();
+                int today_week =  Integer.parseInt(sdf.format(today));
+                int top_week =(btn_id == R.id.acc_info_rb_topWeek)?today_week:today_week-1;
                 Intent info = new Intent();
                 info.putExtra("group",((EditText)findViewById(R.id.et_registrationGroup)).getText().toString());
                 info.putExtra("name",name.getText().toString()+" "+ surname.getText().toString());
+                info.putExtra("top_week",top_week);
                 setResult(RESULT_OK,info);
                 finish();
                 break;

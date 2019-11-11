@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "1038465445190",
+    "firebase_url": "https://fast-incentive-255308.firebaseio.com",
+    "project_id": "fast-incentive-255308",
+    "storage_bucket": "fast-incentive-255308.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1038465445190:android:e8be22cdf0f5452f27c947",
+        "android_client_info": {
+          "package_name": "com.example.timetableapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1038465445190-j323u5usvidotl69f0ob639kcrksh5tf.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.timetableapp",
+            "certificate_hash": "6e7822012426f381e14695d35e7d578e32b1a0aa"
+          }
+        },
+        {
+          "client_id": "1038465445190-lvfjekhvhqnsdu3jdcptc8a17otuias6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCfBqUEPQcGsCwCtoPgQl_mb0eamBd87pc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1038465445190-lvfjekhvhqnsdu3jdcptc8a17otuias6.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

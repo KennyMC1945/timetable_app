@@ -6,5 +6,6 @@
     <string name="local_login_url">/auth/local/login</string>
     <string name="local_register_url">/auth/local/register</string>
     <string name="client_id">1038465445190-41adgo4otnidfpdk0p91lgipm8n54arp.apps.googleusercontent.com</string>
+    <string name="firebase_client_id">1038465445190-lvfjekhvhqnsdu3jdcptc8a17otuias6.apps.googleusercontent.com</string>
     <string name="conf_file">app_settings</string>
 </resources>
