@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
@@ -23,6 +24,8 @@ public class TablePagerAdapter extends FragmentPagerAdapter {
         this.context=context;
         sharedPrefs = context.getSharedPreferences("timetable",Context.MODE_PRIVATE);
     }
+
+
 
     @Override
     public Fragment getItem(int position) {

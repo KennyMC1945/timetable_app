@@ -79,7 +79,8 @@ public class AuthorizationManager {
                     registerOnServer(data);
                 }
                 else {
-                    Toast.makeText(appContext,"Some kind of error ",Toast.LENGTH_SHORT).show();                }
+                    Toast.makeText(appContext,"Some kind of error ",Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }
@@ -94,7 +95,8 @@ public class AuthorizationManager {
                     loginOnServer(data);
                 }
                 else {
-                    Toast.makeText(appContext,"Some kind of error ",Toast.LENGTH_SHORT).show();                }
+                    Toast.makeText(appContext,"Some kind of error ",Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }
@@ -107,11 +109,11 @@ public class AuthorizationManager {
                     FirebaseUser user = mAuth.getCurrentUser();
                     data.putExtra("fb_uid",user.getUid());
                     if (data.getBooleanExtra("login",false)){ loginType = 200; loginOnServer(data);}
-                    else { loginType =0; registerOnServer(data); };
-                    Toast.makeText(appContext,user.getDisplayName(),Toast.LENGTH_SHORT).show();
+                    else { loginType =0; registerOnServer(data); }
                 }
                 else {
-                    Toast.makeText(appContext,"Some kind of error ",Toast.LENGTH_SHORT).show();                }
+                    Toast.makeText(appContext,"Some kind of error ",Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }

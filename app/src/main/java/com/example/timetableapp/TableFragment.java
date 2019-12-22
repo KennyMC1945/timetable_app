@@ -17,21 +17,26 @@ import java.util.Date;
 public class TableFragment extends Fragment {
     public static final String WEEKDAY = "День недели";
     public static final String CONTENT = "Содержимое";
+    public View thisView;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
-        View view = inflater.inflate(R.layout.fragment_table,container,false);
+        thisView = inflater.inflate(R.layout.fragment_table,container,false);
 
         Bundle arguments = getArguments();
         if (arguments != null){
             String weekday = arguments.getString(WEEKDAY);
-            TextView tv_weekday = view.findViewById(R.id.tv_weekday);
+            TextView tv_weekday = thisView.findViewById(R.id.tv_weekday);
             tv_weekday.setText(weekday.substring(0,1).toUpperCase()+weekday.substring(1));
             if (arguments.containsKey(CONTENT)){
-                updateContents(TimetableParser.parseTimetable(arguments.getString(CONTENT)),view);
+                updateContents(TimetableParser.parseTimetable(arguments.getString(CONTENT)),thisView);
             }
         }
-        return view;
+        return thisView;
     }
+
+
+
+
 
     private void updateContents(ArrayList<LessonInfo> lessons, View view){
         TextView[] titles = {view.findViewById(R.id.tv_firstLesson), view.findViewById(R.id.tv_secondLesson),
@@ -69,9 +74,12 @@ public class TableFragment extends Fragment {
 
     private boolean isTopWeek() {
         int top_week = getContext().getSharedPreferences("user_info", Context.MODE_PRIVATE).getInt("top_week", 0);
-        Date today = Calendar.getInstance().getTime();
-        SimpleDateFormat sdf = new SimpleDateFormat("w");
-        int week_now = Integer.parseInt(sdf.format(today));
+//        Date today = Calendar.getInstance().getTime();
+//        SimpleDateFormat weekFormat = new SimpleDateFormat("w");
+//        SimpleDateFormat weekdayFormat = new SimpleDateFormat("u");
+        int week_now = TimeUtils.getWeek();
+        int weekday = TimeUtils.getWeekDay();
+        if (weekday > 5) week_now++;
         if ((week_now-top_week)%2 == 0) return true;
         else return false;
     }

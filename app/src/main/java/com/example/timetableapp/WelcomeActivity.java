@@ -70,12 +70,26 @@ public class WelcomeActivity extends FragmentActivity implements View.OnClickLis
         authManager.subscribe(this);
         cm = new ConnectionManager(getString(R.string.server_url),getApplicationContext());
         setContentView(R.layout.activity_welcome_screen);
-        Button localSignIn = findViewById(R.id.btn_localSignIn);
-        Button register = findViewById(R.id.btn_signUp);
-        localSignIn.setOnClickListener(this);
-        register.setOnClickListener(this);
+        // Задаем известную инфу, если редактируем для локального пользователя
+        updateUI(getIntent().getBooleanExtra("edit",false));
+        // Привязываем слушателя для кнопок
+        findViewById(R.id.btn_localSignIn).setOnClickListener(this);
+        findViewById(R.id.btn_signUp).setOnClickListener(this);
         findViewById(R.id.btn_signIn).setOnClickListener(this);
         findViewById(R.id.btn_continueWithGoogle).setOnClickListener(this);
+    }
+
+    private void updateUI(boolean isEdit){
+        if (isEdit){
+            // Выводим название группы
+            EditText groupName = findViewById(R.id.et_startGroup);
+            groupName.setText(getSharedPreferences("user_info", MODE_PRIVATE).getString("group", ""));
+            // Выбираем какая сейчас неделя
+            RadioGroup week_now = findViewById(R.id.rg_week);
+            int top_week = getSharedPreferences("user_info",MODE_PRIVATE).getInt("top_week",0);
+            if ((TimeUtils.getWeek()-top_week)%2 == 0) week_now.check(R.id.rb_topWeek);
+            else week_now.check(R.id.rb_bottomWeek);
+        }
     }
 
     @Override
@@ -88,11 +102,9 @@ public class WelcomeActivity extends FragmentActivity implements View.OnClickLis
                     group_name.setHintTextColor(Color.RED);
                     break;
                 }
-                Date today = Calendar.getInstance().getTime();
-                SimpleDateFormat sdf = new SimpleDateFormat("w");
                 RadioGroup radioGroup = findViewById(R.id.rg_week);
                 int btn_id = radioGroup.getCheckedRadioButtonId();
-                int today_week =  Integer.parseInt(sdf.format(today));
+                int today_week =  TimeUtils.getWeek();
                 int top_week =(btn_id == R.id.rb_topWeek)?today_week:today_week-1;
                 Intent intent = new Intent();
                 intent.putExtra("no-auth",true);
@@ -124,17 +136,20 @@ public class WelcomeActivity extends FragmentActivity implements View.OnClickLis
 
     @Override
     public void onBackPressed(){
-        AlertDialog.Builder quitDialog = new AlertDialog.Builder(WelcomeActivity.this);
-        quitDialog.setTitle("Выйти из программы");
-        quitDialog.setPositiveButton("Выйти", new DialogInterface.OnClickListener(){
+        if (!getIntent().getBooleanExtra("edit",false)) {
+            AlertDialog.Builder quitDialog = new AlertDialog.Builder(WelcomeActivity.this);
+            quitDialog.setTitle("Выйти из программы");
+            quitDialog.setPositiveButton("Выйти", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     finish();
                 }
-        });
-        quitDialog.setMessage("Вы уверены, что хотите выйти?");
-        quitDialog.setNeutralButton("Отмена", null);
-        quitDialog.show();
+            });
+            quitDialog.setMessage("Вы уверены, что хотите выйти?");
+            quitDialog.setNeutralButton("Отмена", null);
+            quitDialog.show();
+        }
+        else super.onBackPressed();
     }
 
     @Override

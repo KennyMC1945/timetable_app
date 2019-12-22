@@ -55,10 +55,8 @@ public class AccountInfoActivity extends Activity implements View.OnClickListene
                 EditText name = findViewById(R.id.et_firstName);
                 EditText surname = findViewById(R.id.et_secondName);
                 RadioGroup radioGroup = findViewById(R.id.acc_info_rg_week);
-                Date today = Calendar.getInstance().getTime();
-                SimpleDateFormat sdf = new SimpleDateFormat("w");
                 int btn_id = radioGroup.getCheckedRadioButtonId();
-                int today_week =  Integer.parseInt(sdf.format(today));
+                int today_week =  TimeUtils.getWeek();
                 int top_week =(btn_id == R.id.acc_info_rb_topWeek)?today_week:today_week-1;
                 Intent info = new Intent();
                 info.putExtra("group",((EditText)findViewById(R.id.et_registrationGroup)).getText().toString());
